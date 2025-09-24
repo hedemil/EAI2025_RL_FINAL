@@ -23,38 +23,39 @@
       friction="1.0 0.005 0.0001" condim="3"/>
     <!-- Walls as mocap bodies (kinematic, not affected by physics) -->
     <!-- Wall 1: Forward blocking path -->
-    <body name="wallbody1" pos="1.5 0 0.05" mocap="true">
-      <geom name="wallgeom_1" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.05"/>
+    <body name="wallbody_1" pos="1.5 0 0.125" mocap="true">
+      <geom name="wallgeom_1" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.1"/>
     </body>
 
     <!-- Wall 2: Backward blocking path -->
-    <body name="wallbody_2" pos="-1.5 0 0.04" mocap="true">
-      <geom name="wallgeom_2" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.05"/>
+    <body name="wallbody_2" pos="-1.5 0 0.125" mocap="true">
+      <geom name="wallgeom_2" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.1"/>
     </body>
 
     <!-- Wall 3: Left side blocking -->
-    <body name="wallbody_3" pos="0 3.0 0.06" mocap="true">
-      <geom name="wallgeom_3" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.06"/>
+    <body name="wallbody_3" pos="0 3.0 0.125" mocap="true">
+      <geom name="wallgeom_3" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.1"/>
     </body>
 
     <!-- Wall 4: Right side blocking -->
-    <body name="wallbody_4" pos="0 -3.0 0.045" mocap="true">
-      <geom name="wallgeom_4" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.045"/>
+    <body name="wallbody_4" pos="0 -3.0 0.125" mocap="true">
+      <geom name="wallgeom_4" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.1"/>
     </body>
 
     <!-- Wall 5: Additional crossing wall -->
-    <body name="wallbody_5" pos="3.5 0 0.05" mocap="true">
-      <geom name="wallgeom_5" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.05"/>
+    <body name="wallbody_5" pos="3.5 0 0.125" mocap="true">
+      <geom name="wallgeom_5" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.1"/>
     </body>
 
     <!-- Wall 6: Additional crossing wall -->
-    <body name="wallbody_6" pos="-3.5 0 0.035" mocap="true">
-      <geom name="wallgeom_6" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.035"/>
+    <body name="wallbody_6" pos="-3.5 0 0.125" mocap="true">
+      <geom name="wallgeom_6" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.1"/>
     </body>
   </worldbody>
 
 
-  <!-- <include file="sensor_feet.xml"/> -->
+  <include file="sensor_feet.xml"/>
+
   <!-- <include file="sensor_knees.xml"/> -->
   <!-- <include file="sensor_fullcollision.xml"/> -->
 
