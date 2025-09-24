@@ -30,6 +30,7 @@ from mujoco_playground._src.locomotion.go1 import go1_constants as consts
 from mujoco_playground._src import collision
 
 
+
 def default_config() -> config_dict.ConfigDict:
   return config_dict.create(
       ctrl_dt=0.02,
@@ -141,6 +142,49 @@ class Joystick(go1_base.Go1Env):
         config_overrides=config_overrides,
     )
     self._post_init()
+
+    #### Implemented methods ####
+
+    def height_map(self, data: mjx.Data):
+        # Extract position of feet
+        foot_positions = [] 
+        for foot in(self._feet_site_id):
+            foot_positions = data.xpos[foot] # jp.array((3, ))
+        
+        # Starting ray positions
+        offset_xy = 0.1
+        offset_z = 0.15
+        ray_starts = []
+        for foot_pos in foot_positions:
+            nx, ny = 3, 3
+
+            x_min, x_max = foot_pos[0] - offset_xy, foot_pos[0] + offset_xy
+            y_min, y_max = foot_pos[1] - offset_xy, foot_pos[1] + offset_xy
+
+            x = jp.linspace(x_min, x_max, nx)
+            y = jp.linspace(y_min, y_max, ny)
+
+            xv, yv = jp.meshgrid(x, y) # xv, yv - (ny, nx)
+            zv = jp.ones_like(xv) * (foot_pos[2] + offset_z)
+            
+            ray_starts.append(jp.stack([xv.flatten(), yv.flatten(), zv.flatten()], axis = 1))
+            
+        ray_starts = jp.concatenate(ray_starts, axis = 0)
+
+        # Ray directions (straight down)
+        ray_dir = jp.array([0.0, 0.0, -1.0])
+
+        # Batch ray cast
+        distances, _ = ray.batch_ray(
+            self._mj_model, data, ray_starts, ray_dir, (),
+            True, bodyexclude=self._robot_body_ids
+        )
+
+        return distances
+
+    ##############################
+
+
 
   def _post_init(self) -> None:
     self._init_q = jp.array(self._mj_model.keyframe("home").qpos)
