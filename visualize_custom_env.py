@@ -28,11 +28,12 @@ def main():
     # We will no longer use the registry, but directly load our custom XML and model.
     # We will load the "debug" version here, which adds an additional wall *under* the robot
     # We add this to understand that changing walls correctly affects collision + raycasting.
-    xml_path = 'custom_env_debug_wall.xml'
+    # xml_path = 'custom_env_debug_wall.xml'
+    xml_path = 'custom_env.xml'
     env = Joystick(xml_path=xml_path, config=default_config())
 
     # NOTE: For this test, we manually set init_q z position high to avoid collisions with walls
-    env._init_q = env._init_q.at[2].set(1.0)
+    # env._init_q = env._init_q.at[2].set(1.0)
 
     # JIT compile the functions for speed
     jit_reset = jax.jit(env.reset)
@@ -45,7 +46,7 @@ def main():
     print("Running simulation...")
 
     # Perform multiple random resets to show different wall configurations
-    num_resets = 10
+    num_resets = 5
     steps_per_reset = 50  # More steps to show movement
 
     for reset_idx in range(num_resets):

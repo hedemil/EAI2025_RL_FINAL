@@ -264,7 +264,7 @@ class Joystick(go1_base.Go1Env):
   # And set the wall positions based on that (increasing difficulty)
   # For instance, you could pass another parameter to the environment init that specifies training length
   # And then count the number of resets, or set it externally, and set wall heights based on that.
-  def sample_wall_heights(self, rng, range_min=0.2, range_max=0.4):
+  def sample_wall_heights(self, rng, range_min=0.0, range_max=0.1):
     """Sample random wall heights (JAX-compatible)."""
     rng, height_key = jax.random.split(rng)
     num_walls = len(self._wall_geom_ids)
