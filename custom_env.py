@@ -54,34 +54,34 @@ def default_config() -> config_dict.ConfigDict:
       ),
       reward_config=config_dict.create(
           scales=config_dict.create(
-              torso_height=-0.0,  # Adjust magnitude
+              torso_height=0.5, # changed from -0.0, want to keep the torso height
               # Tracking.
-              tracking_lin_vel=1.0,
-              tracking_ang_vel=0.5,
+              tracking_lin_vel=3.0, # changed from 1.0, want it to keep going forward
+              tracking_ang_vel=0.5, # changed from 0.5,  more insentive to follow angular velocity
 
               # Base reward.
-              lin_vel_z=-0.5,
+              lin_vel_z=-0.005, #changed from -0.5, it should not be as penalized for having upward momentum
               ang_vel_xy=-0.05,
-              orientation=-5.0,
+              orientation=-0.1, # changed from -5.0, want it to have more freedom to orient the robot to handle obstacles
               # Other.
-              dof_pos_limits=-1.0, 
-              pose=0.5,
+              dof_pos_limits=-1.0,
+              pose=0.1, # changed from 0.5, want it to not be as rewarded for staying in default pose
               # Other.
-              termination=-1.0,
-              stand_still=-1.0, 
+              termination=-2.0, # changed from -1.0, do not want it to end early
+              stand_still=-5.0, # changed from -1.0, want to penalize it for standing still and being too cautious
               # Regularization.
-              torques=-0.0002,
-              action_rate=-0.01,
-              energy=-0.001, 
+              torques=-0.0001, # changed from -0.002, a bit lower penalization for torques to have more freedom to move 
+              action_rate=-0.001, # changed from -0.01, not as high penalty for doing a lot of actions 
+              energy=-0.0001, # changed from -0.001, not as high penalty for being energy inefficient
               # Feet.
-              feet_clearance=-0.2,
+              feet_clearance=-0.2, 
               feet_slip=-0.1,
-              feet_air_time=0.1,    
+              feet_air_time=0.3, # changed from 0.1, want it to take more frequent steps
           ),
-          tracking_sigma=0.25,
-          max_foot_height=0.15,    
+          tracking_sigma=0.25, 
+          max_foot_height=0.08, # changed from 0.11, this sets the margin for clearence, want it to be low to not get penalty        
           desired_foot_air_time=0.15, 
-          desired_torso_height=0.36,   
+          desired_torso_height=0.4, #changed from 0.36   
       ),
       pert_config=config_dict.create(
           enable=False,
