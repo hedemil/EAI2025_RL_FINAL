@@ -58,7 +58,6 @@ def default_config() -> config_dict.ConfigDict:
               # Tracking.
               tracking_lin_vel=1.0,
               tracking_ang_vel=0.5,
-
               # Base reward.
               lin_vel_z=-0.5,
               ang_vel_xy=-0.05,
@@ -76,7 +75,9 @@ def default_config() -> config_dict.ConfigDict:
               # Feet.
               feet_clearance=-0.2,
               feet_slip=-0.1,
-              feet_air_time=0.1,    
+              feet_air_time=0.1, 
+              # Knee collision penalty
+              knee_contact = 1.0   
           ),
           tracking_sigma=0.25,
           max_foot_height=0.15,    
@@ -414,7 +415,7 @@ class Joystick(go1_base.Go1Env):
         self.mjx_model, state.data, motor_targets, self.n_substeps
     )
 
-    # NOTE: You can do something similar to check for knee collision if you want to integrate this in your reward.
+        # NOTE: You can do something similar to check for knee collision if you want to integrate this in your reward.
     # Vectorized feet-floor collision detection
     contact = jax.vmap(lambda geom_id: collision.geoms_colliding(data, geom_id, self._floor_geom_id))(
         self._feet_geom_id
@@ -427,6 +428,21 @@ class Joystick(go1_base.Go1Env):
     )(self._feet_geom_id)
     # Check if any foot collides with any wall
     contact = contact | feet_wall_collisions.any(axis=1)
+
+    #### KNEE COLLISION DETECTION ##########
+    knee_contact = jax.vmap(lambda geom_id: collision.geoms_colliding(data, geom_id, self._floor_geom_id))(
+        self._knee_geom_id
+    )
+    # Vectorized feet-wall collision detection
+    knee_wall_collisions = jax.vmap(
+        lambda knee_geom_id: jax.vmap(
+            lambda wall_geom_id: collision.geoms_colliding(data, knee_geom_id, wall_geom_id)
+        )(self._wall_geom_ids)
+    )(self._knee_geom_id)
+    # Check if any foot collides with any wall
+    knee_contact = knee_contact | knee_wall_collisions.any(axis=1)
+
+    #########################################
 
     contact_filt = contact | state.info["last_contact"]
 
@@ -447,7 +463,7 @@ class Joystick(go1_base.Go1Env):
     done = self._get_termination(data)
 
     rewards = self._get_reward(
-        data, action, state.info, state.metrics, done, first_contact, contact
+        data, action, state.info, state.metrics, done, first_contact, contact, knee_contact
     )
     rewards = {
         k: v * self._config.reward_config.scales[k] for k, v in rewards.items()
@@ -616,6 +632,7 @@ class Joystick(go1_base.Go1Env):
       done: jax.Array,
       first_contact: jax.Array,
       contact: jax.Array,
+      knee_contact: jax.Array
   ) -> dict[str, jax.Array]:
     del metrics  # Unused.
     return {
@@ -643,7 +660,15 @@ class Joystick(go1_base.Go1Env):
         ),
         "torso_height": self._cost_torso_height(data),
         "dof_pos_limits": self._cost_joint_pos_limits(data.qpos[7:19]),
+        "knee_contact": self._cost_knee_contact(knee_contact)
     }
+
+  def _cost_knee_contact(self, knee_contact: jax.Array) -> jax.Array:
+        # Returns 1.0 if any knee in contact. 0.0 otherwise
+        #jax.debug.print("Any knee contact: {x}", x=jp.any(knee_contact).astype(float))
+        return jp.any(knee_contact).astype(float) 
+
+       
 
   def _cost_torso_height(self, data: mjx.Data) -> jax.Array:
     """Penalize deviation from target torso height above terrain."""
