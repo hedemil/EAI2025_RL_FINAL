@@ -580,6 +580,14 @@ class Joystick(go1_base.Go1Env):
 
     ######## HEIGHT MAP ########
     _, min_height = self.height_map(data = data)
+    info["rng"], noise_rng = jax.random.split(info["rng"])
+    noise_min_height_scaling = 0.1 # this is the same as for linear velocity, but can of course be changed to something else
+    noisy_min_height = (
+        min_height
+        + (2 * jax.random.uniform(noise_rng, shape=min_height.shape) - 1)
+        * self._config.noise_config.level
+        * noise_min_height_scaling
+    )
     ############################
 
     state = jp.hstack([
@@ -590,15 +598,13 @@ class Joystick(go1_base.Go1Env):
         noisy_joint_vel,  # 12. 
         info["last_act"],  # 12 
         info["command"],  # 3
-        min_height # ADDED
+        noisy_min_height # ADDED
     ])
 
     accelerometer = self.get_accelerometer(data)
     angvel = self.get_global_angvel(data)
 
     feet_vel = data.sensordata[self._foot_linvel_sensor_adr].ravel()
-
-
 
     privileged_state = jp.hstack([
         info["last_act"],  # 12
