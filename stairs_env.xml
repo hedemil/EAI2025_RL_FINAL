@@ -51,6 +51,67 @@
     <body name="wallbody_6" pos="-3.5 0 0.125" mocap="true">
       <geom name="wallgeom_6" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.1"/>
     </body>
+
+    <!-- Wall 1: step 1 -->
+    <body name="wallbody_7" pos="1.9 0 0.15" mocap="true">
+      <geom name="wallgeom_7" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.125"/>
+    </body>
+
+    <!-- Wall 2: step 1 -->
+    <body name="wallbody_8" pos="-1.9 0 0.15" mocap="true">
+      <geom name="wallgeom_8" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.125"/>
+    </body>
+
+    <!-- Wall 5: step 1 -->
+    <body name="wallbody_9" pos="4.1 0 0.15" mocap="true">
+      <geom name="wallgeom_9" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.125"/>
+    </body>
+
+    <!-- Wall 6: step 1 -->
+    <body name="wallbody_10" pos="-4.1 0 0.15" mocap="true">
+      <geom name="wallgeom_10" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.125"/>
+    </body>
+
+    <!-- Wall 3: step 1 -->
+    <body name="wallbody_11" pos="0 3.6 0.125" mocap="true">
+      <geom name="wallgeom_11" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.125"/>
+    </body>
+
+    <!-- Wall 4: step 1 -->
+    <body name="wallbody_12" pos="0 -3.6 0.125" mocap="true">
+      <geom name="wallgeom_12" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.125"/>
+    </body>
+
+    <!-- Wall 1: step 2 -->
+    <body name="wallbody_13" pos="2.3 0 0.175" mocap="true">
+      <geom name="wallgeom_13" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.15"/>
+    </body>
+
+    <!-- Wall 2: step 2 -->
+    <body name="wallbody_14" pos="-2.3 0 0.175" mocap="true">
+      <geom name="wallgeom_14" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.3 10.0 0.15"/>
+    </body>
+
+      <!-- Wall 5: step 2 -->
+    <body name="wallbody_15" pos="4.7 0 0.125" mocap="true">
+      <geom name="wallgeom_15" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.15"/>
+    </body>
+
+    <!-- Wall 6: step 2 -->
+    <body name="wallbody_16" pos="-4.7 0 0.125" mocap="true">
+      <geom name="wallgeom_16" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="0.2 8.0 0.15"/>
+    </body>
+
+    <!-- Wall 3: step 2 -->
+    <body name="wallbody_17" pos="0 4.2 0.125" mocap="true">
+      <geom name="wallgeom_17" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.15"/>
+    </body>
+
+    <!-- Wall 4: step 2 -->
+    <body name="wallbody_18" pos="0 -4.2 0.125" mocap="true">
+      <geom name="wallgeom_18" contype="1" conaffinity="0" friction="1.0 0.005 0.0001" rgba="0.6 0.6 0.6 1" type="box" size="10.0 0.3 0.15"/>
+    </body>
+
   </worldbody>
 
 
