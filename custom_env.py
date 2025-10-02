@@ -282,12 +282,21 @@ class Joystick(go1_base.Go1Env):
     """Set wall positions using mocap control."""
     # Get original wall body positions
     new_mocap_pos = data.mocap_pos
+    is_difficult_env = len(wall_heights) == 18
+
     for i, (body_id, height) in enumerate(zip(self._wall_body_ids, wall_heights)):
         mocap_id = body_id - self.mjx_model.nbody + self.mjx_model.nmocap  # Convert to mocap index
 
+        # --- Stair offsets ---
+        offset = 0.0
+        if is_difficult_env and i in (6, 7, 8, 9, 10, 11):          # Step 1
+            offset = 0.125 / 2
+        if is_difficult_env and i in (12, 13, 14, 15, 16, 17):          # Step 2
+            offset += 0.25 / 2
+
         # Get current position and update Z coordinate
         current_pos = new_mocap_pos[mocap_id]
-        new_pos = current_pos.at[2].set(height)
+        new_pos = current_pos.at[2].set(height + offset)
         new_mocap_pos = new_mocap_pos.at[mocap_id].set(new_pos)
 
     return data.replace(mocap_pos=new_mocap_pos)
