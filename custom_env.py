@@ -54,36 +54,36 @@ def default_config() -> config_dict.ConfigDict:
       ),
       reward_config=config_dict.create(
           scales=config_dict.create(
-              torso_height=0.5, # changed from -0.0, want to keep the torso height
+              torso_height=-0.5, 
               # Tracking.
-              tracking_lin_vel=3.0, # changed from 1.0, want it to keep going forward
-              tracking_ang_vel=0.5, # changed from 0.5,  more insentive to follow angular velocity
+              tracking_lin_vel=3.0, 
+              tracking_ang_vel=0.5, 
 
               # Base reward.
-              lin_vel_z=-0.005, #changed from -0.5, it should not be as penalized for having upward momentum
+              lin_vel_z=-0.0005, 
               ang_vel_xy=-0.05,
-              orientation=-0.1, # changed from -5.0, want it to have more freedom to orient the robot to handle obstacles
+              orientation=-0.1, 
               # Other.
               dof_pos_limits=-1.0,
-              pose=0.1, # changed from 0.5, want it to not be as rewarded for staying in default pose
+              pose=0.1, 
               # Other.
-              termination=-2.0, # changed from -1.0, do not want it to end early
-              stand_still=-5.0, # changed from -1.0, want to penalize it for standing still and being too cautious
+              termination=-2.0, 
+              stand_still=-5.0, 
               # Regularization.
-              torques=-0.0001, # changed from -0.002, a bit lower penalization for torques to have more freedom to move 
-              action_rate=-0.001, # changed from -0.01, not as high penalty for doing a lot of actions 
-              energy=-0.0001, # changed from -0.001, not as high penalty for being energy inefficient
+              torques=-0.0001,  
+              action_rate=-0.001, 
+              energy=-0.0001, 
               # Feet.
-              feet_clearance=-0.2, 
-              feet_slip=-0.1,
+              feet_clearance=-0.25, 
+              feet_slip=-0.02,
               feet_air_time=0.1, 
               # Knee collision penalty
-              knee_contact = 1.0   
+              knee_contact = 0.0 # no penalty   
           ),
           tracking_sigma=0.25, 
-          max_foot_height=0.08, # changed from 0.11, this sets the margin for clearence, want it to be low to not get penalty        
-          desired_foot_air_time=0.15, 
-          desired_torso_height=0.4, #changed from 0.36   
+          max_foot_height=0.08,       
+          desired_foot_air_time=0.3, 
+          desired_torso_height=0.4,  
       ),
       pert_config=config_dict.create(
           enable=False,
@@ -187,7 +187,7 @@ class Joystick(go1_base.Go1Env):
     for i in range(4):
        min_heights.append(jp.min(distances[i*(nx * ny):(i+1)*(nx * ny)]))
 
-    return distances, min_heights
+    return distances, jp.array(min_heights)
 
     ##############################
 
@@ -580,6 +580,14 @@ class Joystick(go1_base.Go1Env):
 
     ######## HEIGHT MAP ########
     _, min_height = self.height_map(data = data)
+    info["rng"], noise_rng = jax.random.split(info["rng"])
+    noise_min_height_scaling = 0.1 # this is the same as for linear velocity, but can of course be changed to something else
+    noisy_min_height = (
+        min_height
+        + (2 * jax.random.uniform(noise_rng, shape=min_height.shape) - 1)
+        * self._config.noise_config.level
+        * noise_min_height_scaling
+    )
     ############################
 
     state = jp.hstack([
@@ -590,7 +598,7 @@ class Joystick(go1_base.Go1Env):
         noisy_joint_vel,  # 12. 
         info["last_act"],  # 12 
         info["command"],  # 3
-        min_height # ADDED
+        noisy_min_height # ADDED
     ])
 
     accelerometer = self.get_accelerometer(data)
