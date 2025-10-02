@@ -606,8 +606,6 @@ class Joystick(go1_base.Go1Env):
 
     feet_vel = data.sensordata[self._foot_linvel_sensor_adr].ravel()
 
-
-
     privileged_state = jp.hstack([
         info["last_act"],  # 12
         info["command"],  # 3
