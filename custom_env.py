@@ -185,6 +185,7 @@ class Joystick(go1_base.Go1Env):
     min_heights = []
     for i in range(4):
        min_heights.append(jp.min(distances[i*(nx * ny):(i+1)*(nx * ny)]))
+    min_heights = jnp.array(min_heights)
 
     return distances, min_heights
 
