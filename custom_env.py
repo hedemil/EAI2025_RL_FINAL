@@ -54,35 +54,36 @@ def default_config() -> config_dict.ConfigDict:
       ),
       reward_config=config_dict.create(
           scales=config_dict.create(
-              torso_height=-0.5,  # Adjust magnitude
+              torso_height=-0.5, 
               # Tracking.
-              tracking_lin_vel=3.0,
-              tracking_ang_vel=0.5,
+              tracking_lin_vel=3.0, 
+              tracking_ang_vel=0.5, 
+
               # Base reward.
-              lin_vel_z=-0.0005,       
+              lin_vel_z=-0.0005, 
               ang_vel_xy=-0.05,
-              orientation=-0.1,
+              orientation=-0.1, 
               # Other.
-              dof_pos_limits=-1.0, 
-              pose=0.1,
+              dof_pos_limits=-1.0,
+              pose=0.1, 
               # Other.
-              termination=-2.0,
+              termination=-2.0, 
               stand_still=-5.0, 
               # Regularization.
-              torques=-0.0001,
-              action_rate=-0.001,
+              torques=-0.0001,  
+              action_rate=-0.001, 
               energy=-0.0001, 
               # Feet.
-              feet_clearance=-0.25,
+              feet_clearance=-0.25, 
               feet_slip=-0.02,
               feet_air_time=0.1, 
               # Knee collision penalty
-              knee_contact = 0.0   
+              knee_contact = -0.3   
           ),
-          tracking_sigma=0.25,
-          max_foot_height=0.08,    
+          tracking_sigma=0.25, 
+          max_foot_height=0.08,       
           desired_foot_air_time=0.3, 
-          desired_torso_height=0.4,   
+          desired_torso_height=0.4,  
       ),
       pert_config=config_dict.create(
           enable=False,
@@ -187,7 +188,7 @@ class Joystick(go1_base.Go1Env):
        min_heights.append(jp.min(distances[i*(nx * ny):(i+1)*(nx * ny)]))
     min_heights = jp.array(min_heights)
 
-    return distances, min_heights
+    return distances, jp.array(min_heights)
 
     ##############################
 
@@ -589,6 +590,14 @@ class Joystick(go1_base.Go1Env):
 
     ######## HEIGHT MAP ########
     _, min_height = self.height_map(data = data)
+    info["rng"], noise_rng = jax.random.split(info["rng"])
+    noise_min_height_scaling = 0.1 # this is the same as for linear velocity, but can of course be changed to something else
+    noisy_min_height = (
+        min_height
+        + (2 * jax.random.uniform(noise_rng, shape=min_height.shape) - 1)
+        * self._config.noise_config.level
+        * noise_min_height_scaling
+    )
     ############################
 
     state = jp.hstack([
@@ -599,15 +608,13 @@ class Joystick(go1_base.Go1Env):
         noisy_joint_vel,  # 12. 
         info["last_act"],  # 12 
         info["command"],  # 3
-        min_height # ADDED
+        noisy_min_height # ADDED
     ])
 
     accelerometer = self.get_accelerometer(data)
     angvel = self.get_global_angvel(data)
 
     feet_vel = data.sensordata[self._foot_linvel_sensor_adr].ravel()
-
-
 
     privileged_state = jp.hstack([
         info["last_act"],  # 12
