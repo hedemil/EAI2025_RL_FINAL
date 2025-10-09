@@ -14,6 +14,11 @@ import jax
 import jax.numpy as jnp  # noqa: F401
 import numpy as np
 
+repo_root = Path(__file__).resolve().parents[1]
+import sys
+if str(repo_root) not in sys.path:
+    sys.path.append(str(repo_root))
+
 from brax.training.acme import running_statistics
 from brax.training.acme import specs
 from brax.training.agents.ppo import networks as ppo_networks
