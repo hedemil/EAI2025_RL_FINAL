@@ -125,4 +125,6 @@ dmypy.json
 .pyre/
 
 # Media files
-*.gif
+# *.gif
+_output/*
+_output_bc/*
