@@ -635,9 +635,20 @@ class Joystick(go1_base.Go1Env):
         min_height# ADDED
     ])
 
+    student_state = jp.hstack([
+        noisy_linvel,  # 3, range [ ]
+        noisy_gyro,  # 3, range [ ] 
+        noisy_gravity,  # 3, range [ ] check if gravity or acc
+        noisy_joint_angles - self._default_pose,  # 12. 
+        noisy_joint_vel,  # 12. 
+        info["last_act"],  # 12 
+        info["command"],  # 3
+    ])
+
     return {
         "state": state,
         "privileged_state": privileged_state,
+        "student_state": student_state,
     }
 
   def _get_reward(
