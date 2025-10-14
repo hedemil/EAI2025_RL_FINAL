@@ -1,3 +1,28 @@
+# RL Final Project, overview of what we have added:
+- Feet height sensors functionality to provide ground height measurements around each foot. 
+- A more difficult environment that cotains stairs.
+- Knee collision penalty to see if this influences the performance of the robot.
+- Teacher-student policy.
+- An evaluation notebook which makes it easy to try the trained models without having to train them yourself beforehand. 
+
+## Height sensors
+This works using the method height_map(). The height_map() method uses raycasting to measure distances to the ground from a 3x3 grid around each foot, providing minimum height values for all four feet. This sensor data is integrated into the observation space with noise modeling. The measurement is added to the privileged state without noise and the normal state with noise.
+
+## Stair environment
+The idea of the environment is to see how well the robot generalizes to environments not seen in training. During training the models use the normal setup following what was done in the C-level of the first lab. Then during evaluation we can both assess how well the robot behaves in the same environment with different commands, and then test in the stairs environment. This enables more thorough evaluation of the trained models.
+
+## Knee collision
+This follows what was done for monitoring feet collisions. We check for when geometry ids of the knees intersect with geometry ids of the walls and flag this as a knee collision.
+
+## Teacher-student policy
+The idea is that we use a model trained with PPO as the teacher and train a smaller network containing one neural network such as MLP or RNN to output the same action distribution as the teacher given an observation with less information. This is done using imitation learning. The teacher and student are provided information from an observation where the teacher has more and perfect data and the student has less and noisy data. Then the outputs of the networks are compared, and the student is trained to output the same action distribution as the teacher. What we hope to see is that the student can find the most important bits of information from the observation that the teacher might not recognize in its abundance of information, or at least that the student can achieve good performance with a smaller network.
+
+## Evaluation notebook
+- List all available parameter files (.npy format)
+- Loads the network configuration matching the training setup
+- Runs evaluation episodes with different velocity commands and pertubations
+
+
 # RL Final Project Starter Code
 
 ## Overview
