@@ -20,7 +20,7 @@ The idea is that we use a model trained with PPO as the teacher and train a smal
 ## Evaluation notebook
 - List all available parameter files (.npy format)
 - Loads the network configuration matching the training setup
-- Runs evaluation episodes with different velocity commands and pertubations
+- Runs evaluation episodes with different velocity commands and pertubations first for trained environment and then for unseen environment containing stairs.
 
 
 # RL Final Project Starter Code
