@@ -101,6 +101,7 @@ celerybeat-schedule
 .venv
 env/
 venv/
+venv_rl
 ENV/
 env.bak/
 venv.bak/
@@ -124,4 +125,6 @@ dmypy.json
 .pyre/
 
 # Media files
-*.gif
+# *.gif
+_output/*
+_output_bc/*
