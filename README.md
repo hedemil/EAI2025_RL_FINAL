@@ -1,5 +1,5 @@
 # RL Final Project
-This project was carried out by
+This project was carried out by Emil Hed, Loke Nilsson, Andrea Ritossa, and Malte Sundgren.
 
 ## Overview
 - Feet height sensors functionality to provide ground height measurements around each foot. 
