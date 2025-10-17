@@ -22,6 +22,57 @@ The idea is that we use a model trained with PPO as the teacher and train a smal
 - Loads the network configuration matching the training setup
 - Runs evaluation episodes with different velocity commands and pertubations
 
+<!-- RESULTS-START -->
+## Results
+
+This section showcases visual results. Add your GIFs to the folders under `results/` and embed them below using relative paths. Recommended width is 280–320 px for GitHub readability.
+
+Naming guidelines (recommended for consistency)
+- Use subfolders: `results/baseline/`, `results/height_map/`, `results/knee_collision/`, `results/student_teacher/`.
+- Order GIFs with leading indices: `00_*.gif`, `01_*.gif`, …
+- Keep 2–4 concise GIFs per section.
+
+### Baseline
+Place GIFs in `results/baseline/` and embed here.
+
+<!-- Example: replace with your GIFs -->
+<p align="center">
+  <img src="results/student_bc_mse/teacher_student_0.gif" width="280" alt="Baseline: Forward" />
+  <!-- <img src="results/baseline/01_turn.gif" width="280" alt="Baseline: Turn" /> -->
+  <!-- <img src="results/baseline/02_stairs.gif" width="280" alt="Baseline: Stairs" /> -->
+  <!-- <img src="results/baseline/03_recovery.gif" width="280" alt="Baseline: Recovery" /> -->
+  <!-- Remove the example block above and insert your files -->
+</p>
+
+### Height Map
+Place GIFs in `results/height_map/` and embed here.
+
+<!-- Example: replace with your GIFs -->
+<!-- <p align="center">
+  <img src="results/height_map/00_flat.gif" width="280" alt="Height Map: Flat" />
+  <img src="results/height_map/01_rough.gif" width="280" alt="Height Map: Rough" />
+</p> -->
+
+### Knee Collision
+Place GIFs in `results/knee_collision/` and embed here.
+
+<!-- Example: replace with your GIFs -->
+<!-- <p align="center">
+  <img src="results/knee_collision/00_low_wall.gif" width="280" alt="Knee Collision: Low Wall" />
+  <img src="results/knee_collision/01_high_wall.gif" width="280" alt="Knee Collision: High Wall" />
+</p> -->
+
+### Student–Teacher
+Place GIFs in `results/student_teacher/` and embed here.
+
+<!-- Example: replace with your GIFs -->
+<!-- <p align="center">
+  <img src="results/student_teacher/00_teacher.gif" width="280" alt="Teacher" />
+  <img src="results/student_teacher/01_student.gif" width="280" alt="Student" />
+  <img src="results/student_teacher/02_side_by_side.gif" width="280" alt="Teacher vs Student" />
+</p> -->
+<!-- RESULTS-END -->
+
 
 # RL Final Project Starter Code
 
