@@ -20,6 +20,53 @@ This follows what was done for monitoring feet collisions. We check for when geo
 ## Teacher-student policy
 The idea is that we use a model trained with PPO as the teacher and train a smaller network containing one neural network such as MLP or RNN to output the same action distribution as the teacher given an observation with less information. This is done using imitation learning. The teacher and student are provided information from an observation where the teacher has more and perfect data and the student has less and noisy data. Then the outputs of the networks are compared, and the student is trained to output the same action distribution as the teacher. What we hope to see is that the student can find the most important bits of information from the observation that the teacher might not recognize in its abundance of information, or at least that the student can achieve good performance with a smaller network.
 
+<!-- RESULTS-START -->
+# Results
+
+This section showcases an overview of visual results. 
+
+
+## Baseline
+
+<!-- Example: replace with your GIFs -->
+<p align="center">
+  <img src="results/baseline/baseline.gif" width="560" alt="Baseline: Forward" />
+  <!-- <img src="results/baseline/01_turn.gif" width="280" alt="Baseline: Turn" /> -->
+  <!-- <img src="results/baseline/02_stairs.gif" width="280" alt="Baseline: Stairs" /> -->
+  <!-- <img src="results/baseline/03_recovery.gif" width="280" alt="Baseline: Recovery" /> -->
+  <!-- Remove the example block above and insert your files -->
+</p>
+
+## Height Map
+
+<!-- Example: replace with your GIFs -->
+<p align="center">
+  <img src="results/with_height/height.gif" width="560" alt="Baseline: Forward" />
+</p> 
+
+## Knee Collision
+
+<p align="center">
+  <img src="results/with_knee/knee.gif" width="560" alt="Baseline: Forward" />
+</p> 
+
+
+## Height sensors and knee collision
+
+<p align="center">
+  <img src="results/with_knee_and_height/knee_height.gif" width="560" alt="Baseline: Forward" />
+</p> 
+
+
+## Teacher-student DAgger MSE
+
+<p align="center">
+  <img src="results/student_dagger_mse_student_state/teacher_vs_student_comparison.gif" width="1120"  alt="Baseline: Forward" />
+</p> 
+
+<!-- RESULTS-END -->
+
+
 # How to run the code
 This will go over how to get started and then run the code
 
@@ -76,10 +123,10 @@ This will go over how to run the code
 - Now the training can be ran. By default it will be evaluated in the custom environment after finishing training. Training is set to 150M environment steps and 10 evaluations.
 
 ### Evaluation notebook for PPO network
-In the [evaluation notebook](evaluation/eval_params.ipynb) it is possible to test the networks that we have trained. The notebook will:
-- List all available parameter files (.npy format)
-- Loads the network configuration matching the training setup
-- Runs evaluation episodes with different velocity commands and pertubations
+- In the [evaluation notebook](evaluation/eval_params.ipynb) choose which parameter file that should be used in the evaluation.
+- In the [evaluation notebook](evaluation/eval_params.ipynb) choose which environment should be used for the evaluation. Default is custom.
+- To evaluate a model without height information (baseline and knee models), it needs to be commented out of the state in the [custom python env](environments/custom_env.py).
+- Run the [evaluation notebook](evaluation/eval_params.ipynb) to test the chosen model.
 
 ### Teacher-student policy
 It is possible to run the training with default configurations, otherwise these can be changed in the [teacher student notebook](training/teacher_student_MLP.ipynb):
