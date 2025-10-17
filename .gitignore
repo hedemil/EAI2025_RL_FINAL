@@ -126,3 +126,5 @@ dmypy.json
 
 # Media files
 *.gif
+_output/*
+_output_bc/*
