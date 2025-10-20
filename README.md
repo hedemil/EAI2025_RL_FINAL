@@ -144,6 +144,7 @@ Now run the code
 - Run [teacher student notebook](training/teacher_student_MLP.ipynb)
 - Results (GIFs and params) are saved in [results folder](results)
 
+The trained policys can be evaluated using the evaluation notebook [teacher_student](evaluation/teacher_student.ipynb)
 
 
 
