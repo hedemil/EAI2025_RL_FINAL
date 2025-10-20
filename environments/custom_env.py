@@ -78,7 +78,7 @@ def default_config() -> config_dict.ConfigDict:
               feet_slip=-0.02,
               feet_air_time=0.1, 
               # Knee collision penalty
-              knee_contact = -0.3   
+              knee_contact = -0.3 # to turn off set to 0.0
           ),
           tracking_sigma=0.25, 
           max_foot_height=0.08,       
