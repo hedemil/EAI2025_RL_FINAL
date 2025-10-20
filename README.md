@@ -133,7 +133,7 @@ It is possible to run the training with default configurations, otherwise these 
 - xml_path: path to the environment XML. Defaults to ../environments/custom_env.xml. You can switch to ../environments/stairs_env.xml.
 - student_observation_key: choose the student input features. Options: "student_state", "state", "privileged_state" (for analysis). Default: "state".
 - data_collection: select data source. Options: "bc" (behavior cloning, teacher rollouts) or "dagger" (student rollouts labeled by teacher). Default: "dagger".
-- loss_function_name: imitation loss. Options: "mse" (mean‑squared error on means) or "kl" (KL between Normal(mu, sigma)). Default: "mse". MSE: minimize squared error between student means and teacher means on the same observation batch. KL: closed‑form KL for diagonal Normals, per action dimension, pre‑tanh: $KL = \log(\frac{\sigma_t}{\sigma_s}) + \frac{\sigma_s^2 + (\mu_s−\mu_t)^2}{2 \sigma_t^2} − 0.5$.
+- loss_function_name: imitation loss. Options: "mse" (mean‑squared error on means) or "kl" (KL between Normal(mu, sigma)). Default: "mse". MSE: minimize squared error between student means and teacher means on the same observation batch. KL: closed‑form KL for diagonal Normals, per action dimension, pre‑tanh: $KL = \log(\frac{\sigma_t}{\sigma_s}) + \frac{\sigma_s^2 + (\mu_s−\mu_t)^2}{2 \sigma_t^2} − 0.5$.
 - batch_size: training batch size. Default: 64.
 - learning_rate: optimizer LR (AdamW). Default: 1e-4.
 - experiment_name: auto‑built as student_{data_collection}_{loss_function_name}_{student_observation_key}.
@@ -143,7 +143,6 @@ It is possible to run the training with default configurations, otherwise these 
 Now run the code
 - Run [teacher student notebook](training/teacher_student_MLP.ipynb)
 - Results (GIFs and params) are saved in [results folder](results)
-
 
 
 

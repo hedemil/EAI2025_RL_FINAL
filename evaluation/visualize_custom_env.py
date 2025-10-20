@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Visualization script for Go1 with height scanner."""
+import sys
 import os
+
+# Get the absolute path of the parent directory (EAI2025_RL_FINAL)
+parent_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
+# Add it to sys.path
+sys.path.append(parent_dir)
+
 # Tell XLA to use Triton GEMM
 xla_flags = os.environ.get('XLA_FLAGS', '')
 xla_flags += ' --xla_gpu_triton_gemm_any=True'
